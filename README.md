@@ -1,38 +1,37 @@
-## ValorantAPI
+<h1>ValorantAPI</h1>
 
-This ValorantAPI that will allow you to access your in-game shop, match history, balance and more. 
+<h5>
+This ValorantAPI that will allow you to access your in-game shop and more. 
 More documentation will come out on this and there will also be an example release soon.
-## Reporting an issue
+</h5>
 
-If you find an issue you can submit it [here](https://github.com/TewPingz/ValorantAPI/issues).
+<h1> Reporting an issue </h1>
+<h5>
 
-## Get the Source
+If you find an issue you can submit it [Press here](https://github.com/Valorant-Clan/ValorantAPI/issues).
 
-1. Install maven `sudo apt-get install maven`
+</h5>
+
+<h1>Get the Source </h1>
+
+1. Install maven `apt-get install maven`
 2. Verify installation `mvn -v`
-3. Clone the repository `git clone git@github.com:TewPingz/ValorantAPI.git`
+3. Clone the repository `git clone git@github.com:Valorant-Clan/ValorantAPI.git`
 4. Navigate to the new folder `cd valorantapi`
 5. Import `pom.xml` into your IDE
 
-## Compile a Build
-
-1. Navigate to the repository home directory
-2. Run `mvn clean install`
-3. Find the compiled jars at `target/ValorantAPI-1.0.jar`
-
-## Usage
+<h1>Usage</h1>
 
 1. Compile by following the steps above.
 2. Use the following in your desired project.
   ```java     
-        <dependency>
-            <groupId>me.tewpingz.valorant</groupId>
-            <artifactId>ValorantAPI</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
+        Depends is comming!
    ```
 
-## Contributing
+<h1>Contributing</h1>
 
-You can submit a [pull request](https://github.com/TewPingz/ValorantAPI/pulls) with your changes.
+<h5>
+
+You can submit a [pull request](https://github.com/Valorant-Clan/ValorantAPI/pulls) with your changes.
+
+</h5>
