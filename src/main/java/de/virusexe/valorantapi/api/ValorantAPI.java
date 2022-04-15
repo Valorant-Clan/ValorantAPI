@@ -17,12 +17,11 @@ public class ValorantAPI {
      *
      * @param username the username of the account.
      * @param password the password of the account.
-     * @return an authentication object with uniqueId, token and entertainment token.
      * @throws Exception if the request gets invalidated, or you get rate limited.
      */
 
-    public ValorantAuthentication login(String username, String password) throws Exception {
-        return valorant.authentication(username, password);
+    public void login(String username, String password) throws Exception {
+        valorant.authentication(username, password);
     }
 
     /**
