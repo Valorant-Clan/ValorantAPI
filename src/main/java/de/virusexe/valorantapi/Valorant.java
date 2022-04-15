@@ -1,9 +1,12 @@
 package de.virusexe.valorantapi;
 
 import com.google.gson.*;
+import com.google.gson.internal.bind.util.ISO8601Utils;
+import com.google.gson.stream.JsonToken;
 import de.virusexe.valorantapi.authentication.ValorantAuthentication;
 import de.virusexe.valorantapi.authentication.ValorantHeader;
 
+import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -37,20 +40,10 @@ public class Valorant {
         authObject.addProperty("username", username);
         authObject.addProperty("password", password);
 
-        System.out.println(put(new URL("https://auth.riotgames.com/api/v1/authorization"), authObject).join());
+        CompletableFuture<Void> response = put(new URL("https://auth.riotgames.com/api/v1/authorization"), authObject)
+                .thenApply(JsonElement::getAsJsonObject)
+                .thenAccept(jsonObject1 -> System.out.println(jsonObject1.get("response")));
 
-        /*
-        JsonObject authResponse = put(new URL("https://auth.riotgames.com/api/v1/authorization"), authObject).get().getAsJsonObject();
-        JsonObject responseObject = authResponse.get("response").getAsJsonObject();
-        JsonObject parametersObject = responseObject.get("parameters").getAsJsonObject();
-        String uri = String.valueOf(parametersObject.get("uri"));
-        String[] parts = uri.replace("https://playvalorant.com/opt_in#", "").split("&");
-        String token = parts[0].replace("access_token=", "").replace("\"", "");
-
-        System.out.println(token);
-
-
-         */
         return new ValorantAuthentication("userId", "token", "entitlementToken");
     }
 
