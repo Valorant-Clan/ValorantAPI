@@ -1,14 +1,10 @@
 package de.virusexe.valorantapi;
 
 import com.google.gson.*;
-import com.google.gson.internal.bind.util.ISO8601Utils;
-import com.google.gson.stream.JsonToken;
 import de.virusexe.valorantapi.authentication.ValorantAuthentication;
 import de.virusexe.valorantapi.authentication.ValorantHeader;
 
-import java.io.FilterOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.http.HttpClient;
@@ -40,9 +36,13 @@ public class Valorant {
         authObject.addProperty("username", username);
         authObject.addProperty("password", password);
 
-        CompletableFuture<Void> response = put(new URL("https://auth.riotgames.com/api/v1/authorization"), authObject)
+        CompletableFuture<String> response = put(new URL("https://auth.riotgames.com/api/v1/authorization"), authObject)
                 .thenApply(JsonElement::getAsJsonObject)
-                .thenAccept(jsonObject1 -> System.out.println(jsonObject1.get("response")));
+                .whenComplete((s, throwable) -> {
+                    System.out.println("1" + s.get("response"));
+                })
+                .thenApply(this::mapAccessToken);
+
 
         return new ValorantAuthentication("userId", "token", "entitlementToken");
     }
@@ -96,5 +96,9 @@ public class Valorant {
         }
 
         return client.sendAsync(builder.build(), HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body).thenApply(JsonParser::parseString);
+    }
+
+    private String mapAccessToken(JsonElement jsonElement){
+        return jsonElement.getAsJsonObject().get("response").getAsString();
     }
 }
