@@ -5,6 +5,7 @@ import de.virusexe.valorantapi.authentication.ValorantAuthentication;
 import de.virusexe.valorantapi.authentication.ValorantHeader;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.http.HttpClient;
@@ -36,13 +37,20 @@ public class Valorant {
         authObject.addProperty("username", username);
         authObject.addProperty("password", password);
 
+        System.out.println(put(new URL("https://auth.riotgames.com/api/v1/authorization"), authObject).join());
 
-        System.out.println("1: " +authObject);
+        /*
+        JsonObject authResponse = put(new URL("https://auth.riotgames.com/api/v1/authorization"), authObject).get().getAsJsonObject();
+        JsonObject responseObject = authResponse.get("response").getAsJsonObject();
+        JsonObject parametersObject = responseObject.get("parameters").getAsJsonObject();
+        String uri = String.valueOf(parametersObject.get("uri"));
+        String[] parts = uri.replace("https://playvalorant.com/opt_in#", "").split("&");
+        String token = parts[0].replace("access_token=", "").replace("\"", "");
 
-        CompletableFuture<JsonElement> authResponse = put(new URL("https://auth.riotgames.com/api/v1/authorization"), authObject);
+        System.out.println(token);
 
-        System.out.println(gson.toJsonTree(authResponse));
 
+         */
         return new ValorantAuthentication("userId", "token", "entitlementToken");
     }
 
@@ -82,8 +90,6 @@ public class Valorant {
 
     public CompletableFuture<JsonElement> put(URL url, JsonElement json, ValorantHeader... headers) {
         HttpClient client = HttpClient.newHttpClient();
-
-        System.out.println("2: " + json.toString());
 
         HttpRequest.Builder builder = HttpRequest.newBuilder()
                 .uri(URI.create(url.toString()))
